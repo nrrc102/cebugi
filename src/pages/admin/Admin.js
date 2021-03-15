@@ -36,9 +36,6 @@ export default function Admin() {
     const [zipCode, setZipCode] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    // const [productThumbnail, setProductThumbnail] = useState('');
-    // const [productPrice, setProductPrice] = useState(0);
-    // const [productDesc, setProductDesc] = useState('');
 
     const {data, queryDoc, isLastPage} = lgu;
 
