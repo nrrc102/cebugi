@@ -160,22 +160,6 @@ export default function Admin() {
                 value={password}
                 handleChange={e => setPassword(e.target.value)}
               />
-              {/* <FormInput
-                label="Main image URL"
-                type="url"
-                value={productThumbnail}
-                handleChange={e => setProductThumbnail(e.target.value)}
-              />
-  
-              <FormInput
-                label="Price"
-                type="number"
-                min="0.00"
-                max="10000.00"
-                step="0.01"
-                value={productPrice}
-                handleChange={e => setProductPrice(e.target.value)}
-              /> */}
   
               {/* <CKEditor
                 onChange={evt => setProductDesc(evt.editor.getData())}
