@@ -28,7 +28,7 @@ const Header = ({props, className, onMobileNavOpen, ...rest }) => {
               </Link>  
             </div>
 
-            <nav>
+            {/* <nav>
               <ul>
                 <li>
                   <Link to="/">
@@ -41,7 +41,7 @@ const Header = ({props, className, onMobileNavOpen, ...rest }) => {
                   </Link>
                 </li>
               </ul>
-            </nav>
+            </nav> */}
 
             <div className="callToActions">
 

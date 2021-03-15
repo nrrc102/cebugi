@@ -15,7 +15,6 @@ export const handleAddLgu = lgu => {
     });
 }
 
-
 export const handleFetchLgu = ({filterType}) => {
     return new Promise((resolve, reject) => {
 
