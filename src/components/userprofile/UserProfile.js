@@ -4,7 +4,7 @@ import userIMG from './../../assets/user.png';
 
 export default function UserProfile(props) {
     const {currentUser} = props;
-    const {displayName} = currentUser;
+    const {name} = currentUser;
 
     return (
         <div className="userProfile">
@@ -16,7 +16,7 @@ export default function UserProfile(props) {
                 </li>
                 <li>
                     <span className="displayName">
-                        {displayName && displayName}
+                        {name && name}
                     </span>
                 </li>
             </ul>

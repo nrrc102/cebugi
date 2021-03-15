@@ -3,11 +3,13 @@ import {useDispatch, useSelector} from 'react-redux';
 import {useHistory} from 'react-router-dom';
 // import {useNavigate} from 'react-router-dom';
 import {signUpUserStart} from './../../redux/user/user.actions';
-import './styles.scss';
+
 
 import {NameInput, FormInput, PasswordForm, ConfirmPasswordForm} from './../forms/forminput/FormInput';
 import Button from './../forms/button/Button';
 import AuthWrapper from './../authwrapper/AuthWrapper';
+
+import './styles.scss';
 
 const mapState = ({user}) => ({
     currentUser: user.currentUser,
@@ -19,14 +21,14 @@ const Signup = props => {
     const history = useHistory();
     // const navigate = useNavigate();
     const {currentUser, userErr} = useSelector(mapState);
-    const [displayName, setDisplayName] = useState('');
+    const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [errors, setErrors] = useState([]);
 
     const reset = () => {
-        setDisplayName('');
+        setName('');
         setEmail('');
         setPassword('');
         setConfirmPassword('');
@@ -53,7 +55,7 @@ const Signup = props => {
     const handleFormSubmit = event => {
         event.preventDefault();
         dispatch(signUpUserStart({
-            displayName,
+            name,
             email,
             password,
             confirmPassword
@@ -80,10 +82,10 @@ const Signup = props => {
                     )}
                     <form onSubmit={handleFormSubmit}>
                         <NameInput
-                         name="displayName"
-                         value={displayName}
+                         name="name"
+                         value={name}
                          handleChange={e => 
-                         setDisplayName(e.target.value)} />
+                         setName(e.target.value)} />
 
                         <FormInput  
                         name="email" 
