@@ -53,3 +53,24 @@ export const handleDeleteLgu = documentID =>{
             })
     });
 }
+
+export const handleFetchLguT = (lguID) => {
+    return new Promise((resolve, reject) => {
+      firestore
+        .collection('lgu')
+        .doc(lguID)
+        .get()
+        .then(snapshot => {
+  
+          if (snapshot.exists) {
+            resolve({
+              ...snapshot.data(),
+              documentID: lguID
+            });
+          }
+        })
+        .catch(err => {
+          reject(err);
+        })
+    })
+  }

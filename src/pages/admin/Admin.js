@@ -7,7 +7,7 @@ import Modal from './../../components/modal/Modal';
 import FormSelect from './../../components/forms/formselect/FormSelect';
 import Button from './../../components/forms/button/Button';
 import LoadMore from './../../components/loadmore/LoadMore';
-// import CKEDitor from 'ckeditor4-react';
+import CKEDitor from 'ckeditor4-react';
 
 import {
   NameInput, 
@@ -158,7 +158,7 @@ export default function Admin() {
                 handleChange={e => setPassword(e.target.value)}
               />
   
-              {/* <CKEditor
+              {/* <CKEDitor
                 onChange={evt => setProductDesc(evt.editor.getData())}
               />  */}
   

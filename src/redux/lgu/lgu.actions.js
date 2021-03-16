@@ -19,3 +19,8 @@ export const deleteLguStart = lguID => ({
     type: lguTypes.DELETE_LGU_START,
     payload: lguID
 });
+
+export const fetchLguTStart = (LguID={}) => ({
+    type: lguTypes.FETCH_LGUT_START,
+    payload: LguID
+});

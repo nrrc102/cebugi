@@ -1,7 +1,7 @@
 import {takeLatest, put, all, call} from 'redux-saga/effects';
 import {auth} from './../../firebase/Utils';
 import lguTypes from './lgu.types';
-import {handleAddLgu, handleFetchLgu, handleDeleteLgu} from './lgu.helpers';
+import {handleAddLgu, handleFetchLgu, handleDeleteLgu, handleFetchLguT} from './lgu.helpers';
 import {setLgu, fetchLguStart} from './lgu.actions';
 
 export function* addLgu({payload: {
@@ -40,11 +40,10 @@ export function* onAddLguStart(){
     yield takeLatest(lguTypes.ADD_NEW_LGU_START, addLgu)
 }
 
-export function* fetchLgu({payload: {
-    filterType
-}}){
+export function* fetchLgu({payload}){
     try{
-        const lgu = yield handleFetchLgu({filterType});
+        // const lgu = yield handleFetchLgu({filterType});
+        const lgu = yield handleFetchLgu({payload});
         yield put(
             setLgu(lgu)
         );  
@@ -73,10 +72,27 @@ export function* onDeleteLguStart(){
     yield takeLatest(lguTypes.DELETE_LGU_START, deleteLgu);
 }
 
+export function* fetchLguT({ payload }) {
+    try {
+      const lgu = yield handleFetchLguT(payload);
+      yield put(
+        setLgu(lgu)
+      );
+  
+    } catch (err) {
+      // console.log(err);
+    }
+  }
+  
+  export function* onFetchLguTStart() {
+    yield takeLatest(lguTypes.FETCH_LGUT_START, fetchLguT);
+  }
+
 export default function* lguSagas(){
     yield all([
         call(onAddLguStart),
         call(onFetchLguStart),
-        call(onDeleteLguStart)
+        call(onDeleteLguStart),
+        call(onFetchLguTStart)
     ])
 }

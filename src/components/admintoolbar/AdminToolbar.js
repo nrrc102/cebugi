@@ -19,7 +19,7 @@ export default function AdminToolbar() {
             <ul>
                 <li>
                     <Link to="/admin">
-                        My Admin
+                        Admin
                     </Link>
                 </li>
             </ul>
