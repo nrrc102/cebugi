@@ -86,6 +86,27 @@ export const ConfirmPasswordForm = ({handleChange, label, ...otherProps}) => {
     );
 }
 
+export const NewPasswordForm = ({handleChange, label, ...otherProps}) => {
+    const classes = useStyles();
+    return (
+        <div className="formRow"> 
+            {label && (
+                <label>{label}</label>
+            )}
+            <TextField 
+            type="password"
+            name="password"
+            variant="outlined"
+            label="New Password"  
+            margin="normal" 
+            fullWidth 
+            className={classes.form}
+            onChange={handleChange} 
+            {...otherProps} />
+        </div>
+    );
+}
+
 export const NameInput = ({handleChange, label, ...otherProps}) => {
     const classes = useStyles();
     return (

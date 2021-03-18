@@ -1,8 +1,13 @@
 import {takeLatest, put, all, call} from 'redux-saga/effects';
-import {auth} from './../../firebase/Utils';
+import {auth, detachedAuth, handleUserProfile} from './../../firebase/Utils';
 import lguTypes from './lgu.types';
-import {handleAddLgu, handleFetchLgu, handleDeleteLgu, handleFetchLguT} from './lgu.helpers';
+import {handleAddLgu, handleFetchLgu, handleDeleteLgu, handleFetchLguT, } from './lgu.helpers';
 import {setLgu, fetchLguStart} from './lgu.actions';
+
+export function* getSnapshotFromUserAuth(user, additionalData = {}) {
+      yield call(handleUserProfile, { userAuth: user, additionalData });
+     
+  }
 
 export function* addLgu({payload: {
     sex,
@@ -14,8 +19,11 @@ export function* addLgu({payload: {
     email,
     password  
 }}){
+        // const {user} = yield auth.createUserWithEmailAndPassword({email, password})
+        // const additionalData = {name};
+        // yield getSnapshotFromUserAuth(user,additionalData); 
     try{
-        const timestamp = new Date();
+        const timestamp = new Date();  
         yield handleAddLgu({
             sex,
             name,
@@ -31,6 +39,7 @@ export function* addLgu({payload: {
         yield put(
             fetchLguStart()
         );
+        // yield auth.createUserWithEmailAndPassword({email, password})    
     }catch(err){
         // console.log(err);
     }

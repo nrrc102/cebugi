@@ -37,16 +37,16 @@ const AdminLayout = props => {
                                     Contact Tracing
                                 </Link>
                             </li>
-                            {/* <li>
+                            <li>
                                 <Link to="/changepassword">
                                     Change Password
                                 </Link>
-                            </li> */}
-                            <li>
+                            </li>
+                            {/* <li>
                                 <span className="signOut" onClick={() => signOut()}>
                                     Sign Out
                                 </span>
-                            </li>
+                            </li> */}
                         </ul>
                     </VerticalNav>
                 </div>

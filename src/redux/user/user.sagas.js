@@ -1,8 +1,9 @@
 import userTypes from './user.types';
 import {takeLatest, call, all, put} from 'redux-saga/effects';
-import {signInSuccess, signOutUserSuccess, userError, resetPasswordSuccess} from './user.actions'; 
-import {auth, handleUserProfile, getCurrentUser, GoogleProvider} from './../../firebase/Utils';
-import {handleResetPasswordAPI} from './user.helpers';
+import {signInSuccess, signOutUserSuccess, userError, resetPasswordSuccess, updatePasswordSuccess} from './user.actions'; 
+import {auth, handleUserProfile, getCurrentUser, GoogleProvider, reduxFirebaseSaga} from './../../firebase/Utils';
+import {handleChangePasswordAPI, handleResetPasswordAPI} from './user.helpers';
+
 
 export function* getSnapshotFromUserAuth(user, additionalData = {}) {
     try {
@@ -115,8 +116,8 @@ export function* getSnapshotFromUserAuth(user, additionalData = {}) {
   
   export function* googleSignIn() {
     try {
-      yield auth.signInWithPopup(GoogleProvider);
-    //   yield getSnapshotFromUserAuth(user);
+      const {user} = yield auth.signInWithPopup(GoogleProvider);
+      yield getSnapshotFromUserAuth(user);
   
     } catch (err) {
       // console.log(err);
@@ -127,6 +128,26 @@ export function* getSnapshotFromUserAuth(user, additionalData = {}) {
     yield takeLatest(userTypes.GOOGLE_SIGN_IN_START, googleSignIn);
   }
   
+
+  export function* updatePassword({payload: {password}}){
+  
+    try {
+      yield call(handleChangePasswordAPI, password);
+      const success = ['Sucessfully Changed'];
+      yield put(
+        updatePasswordSuccess(success)
+      );
+    
+    } catch (err) {
+      yield put(
+        userError(err)
+      )
+    }
+  }
+  
+  export function* onUpdatePassword(){
+    yield takeLatest(userTypes.CHANGE_PASSWORD_START, updatePassword)
+  }
   
   export default function* userSagas() {
     yield all([
@@ -136,5 +157,6 @@ export function* getSnapshotFromUserAuth(user, additionalData = {}) {
       call(onSignUpUserStart),
       call(onResetPasswordStart),
       call(onGoogleSignInStart),
+      call(onUpdatePassword)
     ])
   }

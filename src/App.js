@@ -24,6 +24,7 @@ import Dashboard from './pages/dashboard/Dashboard';
 import Admin from './pages/admin/Admin';
 import Search from './pages/search/Search';
 import './default.scss';
+import UpdatePassword from './pages/changepassword/index';
 
 
 const App = props => {
@@ -88,7 +89,15 @@ const App = props => {
                 <Admin/> 
               </AdminLayout>
             </WithAdminAuth>
-          )} />=
+          )} />
+           <Route path="/changepassword" render={() => (
+            <WithAdminAuth>
+              <AdminLayout>
+                <UpdatePassword/> 
+              </AdminLayout>
+            </WithAdminAuth>
+          )} />
+  
   
     </div>
   );

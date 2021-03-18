@@ -17,12 +17,18 @@ export const handleResetPasswordAPI = (email) => {
     });
 };
 
-// export const handleChangePasswordAPI = (email) => {
-//     const config = {
-//         url: 'http://localhost:3000/login/changepassword'
-//     };
-    
-//     return new Promise((resolve, reject) => {
-//         auth
-//     })
-// }
+export const handleChangePasswordAPI = (password) => {
+    // const config = {
+    //     url: 'http://localhost:3000/admin'
+    // };
+    return new Promise((resolve, reject) => {
+         auth.currentUser.updatePassword(password)
+         .then(() => {
+             const success = ['Successfully Changed']
+             resolve(success);
+         })
+         .catch(() => {
+             reject();
+         })
+    })
+}
