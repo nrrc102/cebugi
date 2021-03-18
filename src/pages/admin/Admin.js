@@ -1,14 +1,13 @@
 import React,{useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {addLguStart, fetchLguStart, deleteLguStart} from './../../redux/lgu/lgu.actions';
+import Remove from './../../assets/remove.svg'
+import './styles.scss';
 
-import Modal from './../../components/modal/Modal';
-
+//components
 import FormSelect from './../../components/forms/formselect/FormSelect';
 import Button from './../../components/forms/button/Button';
-import LoadMore from './../../components/loadmore/LoadMore';
-import CKEDitor from 'ckeditor4-react';
-
+import Modal from './../../components/modal/Modal';
 import {
   NameInput, 
   FormInput, 
@@ -18,7 +17,29 @@ import {
   ZipCOdeInput,
   PasswordForm} from './../../components/forms/forminput/FormInput';
 
-import './styles.scss';
+//material-ui
+import { makeStyles } from '@material-ui/core/styles';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
+
+const useStyles = makeStyles({
+  table: {
+    minWidth: 650,
+  },
+  tablecell: {
+    fontSize: '2rem',
+    fontWeight: 400
+},
+  cells: {
+  fontSize: '1.6rem',
+  fontWeight: 400
+}
+});
 
   const mapState = ({lguData}) => ({
     lgu: lguData.lgu
@@ -27,6 +48,7 @@ import './styles.scss';
 export default function Admin() {
     const {lgu} = useSelector(mapState);
     const dispatch = useDispatch();  
+    const classes = useStyles();
     const [hideModal, setHideModal] = useState(true);
     const [sex, setSex] = useState('Male');
     const [name, setName] = useState('');
@@ -36,8 +58,7 @@ export default function Admin() {
     const [zipCode, setZipCode] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-
-    const {data, queryDoc, isLastPage} = lgu;
+   
 
     useEffect(() => {
       dispatch(
@@ -81,211 +102,135 @@ export default function Admin() {
         );
         resetForm();
       };
-    
-      const handleLoadMore = () => {
-        dispatch(
-          fetchLguStart({
-            startAfterDoc: queryDoc,
-            persistProducts: data
-          })
-        );
-      };
-    
-      const configLoadMore = {
-        onLoadMoreEvt: handleLoadMore,
-      };
 
-    return (
-        <div className="admin">
+  return(
+    <div className="admin">
+      <div className="callToActions">
+      <ul>
+        <li>
+          <Button 
+          onClick={() => toggleModal()}
+          >
+            Create an Account
+          </Button>
+        </li>
+      </ul>
+    </div>
 
-        <div className="callToActions">
-          <ul>
-            <li>
-              <Button 
-              onClick={() => toggleModal()}
-              >
-                Create an Account
-              </Button>
-            </li>
-          </ul>
-        </div>
-  
-        <Modal {...configModal}>
-          <div className="addNewProductForm">
-            <form 
-            onSubmit={handleSubmit}
-            >
-  
-              <h2>
-                Create an Account
-              </h2>
-              <NameInput
-                value={name}
-                handleChange={e => setName(e.target.value)}
-              />
-              <PositionInput
-                value={position}
-                handleChange={e => setPosition(e.target.value)}
-              />
-              <FormSelect
-                options={[{
-                  value: "Male",
-                  name: "Male"
-                }, {
-                  value: "Female",
-                  name: "Female"
-                }]}
-                handleChange={e => setSex(e.target.value)}
-              />
-              <StreetInput
-                value={street}
-                handleChange={e => setStreet(e.target.value)}
-              />
-               <BarangayInput
-                value={barangay}
-                handleChange={e => setBarangay(e.target.value)}
-              />
-              <ZipCOdeInput
-                value={zipCode}
-                handleChange={e => setZipCode(e.target.value)}
-              />
-              <FormInput
-                value={email}
-                handleChange={e => setEmail(e.target.value)}
-              />
-              <PasswordForm
-                value={password}
-                handleChange={e => setPassword(e.target.value)}
-              />
-  
-              {/* <CKEDitor
-                onChange={evt => setProductDesc(evt.editor.getData())}
-              />  */}
-  
-              <br />
-  
-              <Button type="submit">
-                Create
-              </Button>
-  
-            </form>
-          </div>
-        </Modal>
+    <Modal {...configModal}>
+      <div className="addNewProductForm">
+        <form 
+        onSubmit={handleSubmit}
+        >
 
-        <div className="manageLgu">
-          <table border="0" cellPadding="0" cellSpacing="0">
-            <tbody>
-              <tr>
-                <th>
-                  <h1>Manage LGU</h1>
-                </th>
-              </tr>
-              <tr>
-                <td>
-                  <table className="results" border="1" cellPadding="10" cellSpacing="0">
-                    <thead>
-                      <td>
-                        Name
-                      </td>
-                      <td>
-                        Position
-                      </td>
-                      <td>
-                        Street
-                      </td>
-                      <td>
-                        Barangay
-                      </td>
-                      <td>
-                        Zip Code
-                      </td>
-                      <td>
-                        Sex
-                      </td>
-                      <td>
-                        Email
-                      </td>
-                      <td>
-                        Password
-                      </td>
-                      <td>
-                        Action
-                      </td>
-                    </thead>
-                    <tbody>
-                      {lgu.map((lgu, index) => {
-                        const {
-                          name,
-                          position,
-                          street,
-                          barangay,
-                          zipCode,
-                          sex,
-                          email,
-                          password,
-                          documentID
-                        } = lgu
-                        return (
-                         <tr>
-                            <td key={index}>
-                              {name}
-                            </td>
-                            <td>
-                              {position}
-                            </td>
-                            <td>
-                              {street}
-                            </td>
-                            <td>
-                              {barangay}
-                            </td>
-                            <td>
-                              {zipCode}
-                            </td>
-                            <td>
-                              {sex}
-                            </td>
-                            <td>
-                              {email}
-                            </td>
-                            <td>
-                              {password}
-                            </td>
-                            <td>
-                              <Button onClick={() => dispatch(deleteLguStart(documentID))}>
-                                Delete
-                              </Button>
-                            </td>
-                         </tr>
-                        )
-                      })}
-                    </tbody>
-                  </table>
-                </td>
-              </tr>
-              <tr>
-                <td>
-  
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <table border="0" cellPadding="10" cellSpacing="0">
-                    <tbody>
-                      <tr>
-                        <td>
-                          {!isLastPage && (
-                            <LoadMore {...configLoadMore} />
-                          )}
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+          <h2>
+            Create an Account
+          </h2>
+          <NameInput
+            value={name}
+            handleChange={e => setName(e.target.value)}
+          />
+          <PositionInput
+            value={position}
+            handleChange={e => setPosition(e.target.value)}
+          />
+          <FormSelect
+            options={[{
+              value: "Male",
+              name: "Male"
+            }, {
+              value: "Female",
+              name: "Female"
+            }]}
+            handleChange={e => setSex(e.target.value)}
+          />
+          <StreetInput
+            value={street}
+            handleChange={e => setStreet(e.target.value)}
+          />
+           <BarangayInput
+            value={barangay}
+            handleChange={e => setBarangay(e.target.value)}
+          />
+          <ZipCOdeInput
+            value={zipCode}
+            handleChange={e => setZipCode(e.target.value)}
+          />
+          <FormInput
+            value={email}
+            handleChange={e => setEmail(e.target.value)}
+          />
+          <PasswordForm
+            value={password}
+            handleChange={e => setPassword(e.target.value)}
+          />
+
+          {/* <CKEDitor
+            onChange={evt => setProductDesc(evt.editor.getData())}
+          />  */}
+
+          <br />
+
+          <Button type="submit">
+            Create
+          </Button>
+
+        </form>
       </div>
-    );
-}
+    </Modal>
+    <div className="manageLgu">
+    <TableContainer component={Paper} >
+        <Table className={classes.table} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell className={classes.tablecell} >Name</TableCell>
+              <TableCell className={classes.tablecell}>Position</TableCell>
+              <TableCell className={classes.tablecell}>Street</TableCell>
+              <TableCell className={classes.tablecell}>Barangay</TableCell>
+              <TableCell className={classes.tablecell}>Zipcode</TableCell>
+              <TableCell className={classes.tablecell}>Sex</TableCell>
+              <TableCell className={classes.tablecell}>Email</TableCell>
+              <TableCell className={classes.tablecell}>Password</TableCell>
+              <TableCell className={classes.tablecell}>Action</TableCell>
+
+            </TableRow>
+          </TableHead>
+            <TableBody>
+              {lgu.map((lgu, index) => {
+                const {
+                  name,
+                  position,
+                  street,
+                  barangay,
+                  zipCode,
+                  sex,
+                  email,
+                  password,
+                  documentID
+                } = lgu
+                return (
+                     <TableRow key={index}>
+                        <TableCell className={classes.tablecell} component="th" scope="row">
+                        {name}
+                         </TableCell>
+                         <TableCell className={classes.cells}>{position}</TableCell>
+                         <TableCell className={classes.cells}>{street}</TableCell>
+                         <TableCell className={classes.cells}>{barangay}</TableCell>
+                         <TableCell className={classes.cells}>{zipCode}</TableCell>
+                         <TableCell className={classes.cells}>{sex}</TableCell>
+                         <TableCell className={classes.cells}>{email}</TableCell>
+                         <TableCell className={classes.cells}>{password}</TableCell>
+                       {/* <Button onClick={() => dispatch(deleteLguStart(documentID))}>
+                         Delete
+                       </Button> */}
+                         <img src={Remove}  onClick={() => dispatch(deleteLguStart(documentID))} />
+                  </TableRow>
+                 )
+              })}
+            </TableBody>
+        </Table>
+      </TableContainer>
+     </div>
+   </div>
+  )
+            }
