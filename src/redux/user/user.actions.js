@@ -52,6 +52,19 @@ export const googleSignInStart = () => ({
 });
 
 
+//
+
+export const updatePasswordStart = userCredentials => ({
+    type: userTypes.CHANGE_PASSWORD_START,
+    payload: userCredentials
+});
+
+export const updatePasswordSuccess = (success) => ({
+    type: userTypes.CHANGE_PASSWORD_SUCCESS,
+    payload: success
+});
+
+
 
 
 

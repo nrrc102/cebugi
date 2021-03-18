@@ -2,8 +2,14 @@ import {firebaseConfig} from "./Config";
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
+import * as admin from 'firebase-admin'
 
+const authApp = firebase.initializeApp(firebaseConfig, 'authApp');
+export const detachedAuth = authApp.auth();
+
+//
 firebase.initializeApp(firebaseConfig);
+
 
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
