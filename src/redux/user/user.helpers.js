@@ -1,4 +1,4 @@
-import {auth} from './../../firebase/Utils';
+import {auth, FacebookProvider} from './../../firebase/Utils';
 
 export const handleResetPasswordAPI = (email) => {
     const config = {
@@ -24,7 +24,7 @@ export const handleChangePasswordAPI = (password) => {
     return new Promise((resolve, reject) => {
          auth.currentUser.updatePassword(password)
          .then(() => {
-             const success = ['Successfully Changed']
+             const success = ['Successfully Changed'];
              resolve(success);
          })
          .catch(() => {
@@ -32,3 +32,30 @@ export const handleChangePasswordAPI = (password) => {
          })
     })
 }
+
+export const handleLinkAccount = () => {
+    const user = auth.currentUser;
+    // merge(user, FacebookProvider);
+    merge(user);
+}
+
+const merge = (prevUser, provider) => {
+    auth.signInWithPopup(provider)
+    .then((user) => {
+        const secAccCred = user.credential;
+        auth.currentUser.delete()
+        .then(() => {
+            return prevUser.linkWithCredential(secAccCred);
+        })
+        .then(() => {
+            auth.signInWithCredential(secAccCred);
+            console.log('Linked with Facebook succesfully!');
+        })
+        
+    })
+    .catch((error) => {
+        console.log(error)
+    })
+}
+
+

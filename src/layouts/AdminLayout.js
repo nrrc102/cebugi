@@ -8,6 +8,7 @@ import Header from './../components/header/index';
 import VerticalNav from './../components/verticalnav/VerticalNav';
 import Footer from './../components/footer/Footer';
 
+
 const AdminLayout = props => {
     const dispatch = useDispatch();
 

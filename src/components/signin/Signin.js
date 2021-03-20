@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {Link, useHistory} from 'react-router-dom';
-import {emailSignInStart, googleSignInStart} from './../../redux/user/user.actions';
+import {emailSignInStart, facebookSignInStart, googleSignInStart} from './../../redux/user/user.actions';
 
-import {GoogleButton, LoginButton} from '../forms/button/Button';
+import {FacebookButton, GoogleButton, LoginButton} from '../forms/button/Button';
 import {PasswordForm, FormInput} from './../forms/forminput/FormInput';
 import AuthWrapper from './../authwrapper/AuthWrapper';
 import './styles.scss';
@@ -45,6 +45,10 @@ const SignIn = props => {
     dispatch(googleSignInStart());
   }
 
+  const handleFacebookSignIn = () => {
+    dispatch(facebookSignInStart());
+  }
+
   const configAuthWrapper = {
     headline: 'LogIn'
   };
@@ -59,6 +63,7 @@ const SignIn = props => {
                 Login with Google
                 </GoogleButton>
             </div>
+           
           </div>
           <Typography
             align="center"
@@ -81,6 +86,9 @@ const SignIn = props => {
           <LoginButton>
             LogIn
           </LoginButton>
+          <FacebookButton onClick={handleFacebookSignIn}>
+                Login with Facebook
+              </FacebookButton>
 
           <div className="links">
             <Link to="/recovery">

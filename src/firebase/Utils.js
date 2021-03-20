@@ -2,20 +2,28 @@ import {firebaseConfig} from "./Config";
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
-import * as admin from 'firebase-admin'
+import { credential } from "firebase-admin";
+// import * as admin from 'firebase-admin'
 
 const authApp = firebase.initializeApp(firebaseConfig, 'authApp');
 export const detachedAuth = authApp.auth();
 
+// export const adminFB = admin.initializeApp(firebaseConfig)
+
 //
 firebase.initializeApp(firebaseConfig);
-
 
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
 
 export const GoogleProvider = new firebase.auth.GoogleAuthProvider();
 GoogleProvider.setCustomParameters({ prompt: 'select_account' });
+
+
+export const FacebookProvider = new firebase.auth.FacebookAuthProvider();
+// FacebookProvider.setCustomParameters({'prompt': 'select_account'});
+FacebookProvider.setCustomParameters({'display': 'popup', prompt: 'select_account'});
+
 
 export const handleUserProfile = async ({ userAuth, additionalData }) => {
   if (!userAuth) return;

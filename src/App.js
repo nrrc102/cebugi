@@ -23,8 +23,9 @@ import Recovery from './pages/recovery/Recovery';
 import Dashboard from './pages/dashboard/Dashboard';
 import Admin from './pages/admin/Admin';
 import Search from './pages/search/Search';
-import './default.scss';
 import UpdatePassword from './pages/changepassword/index';
+import './default.scss';
+
 
 
 const App = props => {
