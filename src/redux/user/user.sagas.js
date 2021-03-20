@@ -1,8 +1,8 @@
 import userTypes from './user.types';
 import {takeLatest, call, all, put} from 'redux-saga/effects';
 import {signInSuccess, signOutUserSuccess, userError, resetPasswordSuccess, updatePasswordSuccess} from './user.actions'; 
-import {auth, handleUserProfile, getCurrentUser, GoogleProvider, reduxFirebaseSaga} from './../../firebase/Utils';
-import {handleChangePasswordAPI, handleResetPasswordAPI} from './user.helpers';
+import {auth, handleUserProfile, getCurrentUser, GoogleProvider, FacebookProvider} from './../../firebase/Utils';
+import {handleChangePasswordAPI, handleLinkAccount, handleResetPasswordAPI} from './user.helpers';
 
 
 export function* getSnapshotFromUserAuth(user, additionalData = {}) {
@@ -148,6 +148,21 @@ export function* getSnapshotFromUserAuth(user, additionalData = {}) {
   export function* onUpdatePassword(){
     yield takeLatest(userTypes.CHANGE_PASSWORD_START, updatePassword)
   }
+
+  export function* facebookSignIn(){
+    try{
+      const {user} = yield auth.signInWithPopup(FacebookProvider);
+      yield getSnapshotFromUserAuth(user);
+    }catch(err){
+      // console.log(err);
+    }
+  }
+
+
+
+  export function* onFacebookSignInStart(){
+    yield takeLatest(userTypes.FACEBOOK_SIGN_IN_START, facebookSignIn)
+  }
   
   export default function* userSagas() {
     yield all([
@@ -157,6 +172,7 @@ export function* getSnapshotFromUserAuth(user, additionalData = {}) {
       call(onSignUpUserStart),
       call(onResetPasswordStart),
       call(onGoogleSignInStart),
-      call(onUpdatePassword)
+      call(onUpdatePassword),
+      call(onFacebookSignInStart)
     ])
   }

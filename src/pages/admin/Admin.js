@@ -192,7 +192,6 @@ export default function Admin() {
               <TableCell className={classes.tablecell}>Email</TableCell>
               <TableCell className={classes.tablecell}>Password</TableCell>
               <TableCell className={classes.tablecell}>Action</TableCell>
-
             </TableRow>
           </TableHead>
             <TableBody>

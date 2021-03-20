@@ -51,6 +51,10 @@ export const googleSignInStart = () => ({
     type: userTypes.GOOGLE_SIGN_IN_START
 });
 
+export const facebookSignInStart = () => ({
+    type: userTypes.FACEBOOK_SIGN_IN_START
+});
+
 
 //
 

@@ -1,6 +1,7 @@
 import React from 'react';
 // import './styles.scss';
 import GoogleIcon from './../../../icons/Google';
+import FacebookIcon from './../../../icons/Facebook';
 
 import {
   Button,
@@ -68,6 +69,28 @@ export const GoogleButton = ({children, ...otherProps}) => {
 
   )
 }
+
+export const FacebookButton = ({children, ...otherProps}) => {
+  const classes = useStyles();
+  return(
+    <Grid
+    item
+    xs={12}
+    // md={6}
+  >
+    <Button
+     startIcon={<FacebookIcon />}
+     fullWidth
+     size="large"
+     variant="contained"
+     {...otherProps}>
+     {children}
+    </Button>
+    </Grid>
+
+  )
+}
+
 
 
 export default LoginButton;
